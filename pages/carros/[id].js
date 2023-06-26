@@ -48,10 +48,6 @@ const form = () => {
                     <Form.Label>Cor:</Form.Label>
                     <Form.Control type="text" {...register('cor')} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="estado">
-                    <Form.Label>Estado:</Form.Label>
-                    <Form.Control type="text" {...register('estados')} />
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="ano">
                     <Form.Label>Ano:</Form.Label>
                     <Form.Control type="text" {...register('ano')} />

@@ -1,64 +1,25 @@
-const carrosValidator = {
-    marca: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 2,
-            message: 'O mínimo é 2'
-        },
-        maxLength: {
-            value: 15,
-            message: 'O máximo é 15'
-        },
-    },
+import * as Yup from 'yup';
 
-    modelo: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 2,
-            message: 'O mínimo é 2'
-        },
-        maxLength: {
-            value: 15,
-            message: 'O máximo é 15'
-        },
-    },
+const carrosValidator = Yup.object().shape({
+    marca: Yup.string()
+        .required('Campo Obrigatório')
+        .min(2, 'O mínimo é 2')
+        .max(15, 'O máximo é 15'),
 
-    cor: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 3,
-            message: 'O mínimo é 3'
-        },
-        maxLength: {
-            value: 10,
-            message: 'O máximo é 10'
-        },
-    },
+    modelo: Yup.string()
+        .required('Campo Obrigatório')
+        .min(2, 'O mínimo é 2')
+        .max(15, 'O máximo é 15'),
 
-    estado: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 3,
-            message: 'O mínimo é 3'
-        },
-        maxLength: {
-            value: 15,
-            message: 'O máximo é 15'
-        },
-    },
+    cor: Yup.string()
+        .required('Campo Obrigatório')
+        .min(3, 'O mínimo é 3')
+        .max(10, 'O máximo é 10'),
 
-    ano: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 4,
-            message: 'O mínimo é 4'
-        },
-        maxLength: {
-            value: 4,
-            message: 'O máximo é 4'
-        },                                    /*colocar uma validação que nao deixe adicionar o ano que nao tem*/
-    },
-}
+    ano: Yup.number()
+        .required('Campo Obrigatório')
+        .min(1950, 'O mínimo é 1950')
+        .max(new Date().getFullYear(), 'O ano não pode ser superior ao ano atual')
+});
 
-
-export default carrosValidator 
+export default carrosValidator;

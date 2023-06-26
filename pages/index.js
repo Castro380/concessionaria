@@ -7,5 +7,6 @@ export default function Home() {
         <h1>CONCESSIONÁRIA</h1>
       </Pagina>
     </>
-  )
+  );
 }
+

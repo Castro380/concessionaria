@@ -56,15 +56,15 @@ const index = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cadastros.map((item) => (
-                            <tr key={item.id}>
+                        {cadastros.map((item, id) => (
+                            <tr key={id}>
                                 <td>
-                                    <Link href={'/cadastros/' + item.id}>
+                                    <Link href={'/cadastros/' + id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
                                     </Button>
 
 

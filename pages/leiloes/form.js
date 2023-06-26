@@ -18,6 +18,7 @@ const form = () => {
         const leiloes = JSON.parse(window.localStorage.getItem('leiloes')) || [] // tirar de uma string
         leiloes.push(dados)
         window.localStorage.setItem('leiloes', JSON.stringify(leiloes))//transformar em uma string
+        push('/leiloes')
     }
 
 

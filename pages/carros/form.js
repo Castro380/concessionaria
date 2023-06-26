@@ -7,23 +7,28 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import carrosValidator from '@/validators/carrosValidator'
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit, formState: {errors} } = useForm()
+    const { register, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(carrosValidator),
+      })
 
     function salvar(dados) { //salvar dados no localstorage
         const carros = JSON.parse(window.localStorage.getItem('carros')) || [] // tirar de uma string
         carros.push(dados)
         window.localStorage.setItem('carros', JSON.stringify(carros))//transformar em uma string
+        push('/carros')
     }
     return (
         <Pagina titulo='carross'>
             <Form>
                 <Form.Group className="mb-3" controlId="marca">
                     <Form.Label>Marca:</Form.Label>
-                    <Form.Control isInvalid={errors.marca} type="text" {...register('marca', carrosValidator.marca)} />
+                    <Form.Control isInvalid={errors.marca} type="text" {...register('marca')} />
                 </Form.Group>
                 {
                     errors.marca &&
@@ -31,35 +36,27 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="modelo">
                     <Form.Label>Modelo:</Form.Label>
-                    <Form.Control isInvalid={errors.modelo} type="text" {...register('modelo', carrosValidator.modelo)} />
+                    <Form.Control isInvalid={errors.modelo} type="text" {...register('modelo')} />
                 </Form.Group>
                 {
                     errors.modelo &&
-                    <p className='mt -1 text-danger'>{errors.modelo.message}</p>
+                    <p className='mt -1 text-danger'>{errors.modelo?.message}</p>
                 }
                 <Form.Group className="mb-3" controlId="cor">
                     <Form.Label>Cor:</Form.Label>
-                    <Form.Control isInvalid={errors.cor} type="text" {...register('cor', carrosValidator.cor)} />
+                    <Form.Control isInvalid={errors.cor} type="text" {...register('cor')} />
                 </Form.Group>
                 {
                     errors.cor &&
-                    <p className='mt -1 text-danger'>{errors.cor.message}</p>
-                }
-                <Form.Group className="mb-3" controlId="estado">
-                    <Form.Label>Estado:</Form.Label>
-                    <Form.Control isInvalid={errors.estado} type="text" {...register('estado', carrosValidator.estado)} />
-                </Form.Group>
-                {
-                    errors.estado &&
-                    <p className='mt -1 text-danger'>{errors.estado.message}</p>
+                    <p className='mt -1 text-danger'>{errors.cor?.message}</p>
                 }
                 <Form.Group className="mb-3" controlId="ano">
                     <Form.Label>Ano:</Form.Label>
-                    <Form.Control isInvalid={errors.ano} type="text" {...register('ano', carrosValidator.ano)} />
+                    <Form.Control isInvalid={errors.ano} type="number" {...register('ano')} />
                 </Form.Group>
                 {
                     errors.ano &&
-                    <p className='mt -1 text-danger'>{errors.ano.message}</p>
+                    <p className='mt -1 text-danger'>{errors.ano?.message}</p>
                 }
                 <div className='text-center'>
                     <Button variant="success" onClick={handleSubmit(salvar)}>

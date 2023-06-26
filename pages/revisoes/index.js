@@ -51,20 +51,21 @@ const index = () => {
                             <th>Cpf</th>
                             <th>Email</th>
                             <th>Telefone</th>
+                            <th>Modelo</th>
                             <th>Estado</th>
                             <th>Data</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {revisoes.map((item) => (
-                            <tr key={item.id}>
+                        {revisoes.map((item, id) => (
+                            <tr key={id}>
                                 <td>
-                                    <Link href={'/revisoes/' + item.id}>
+                                    <Link href={'/revisoes/' + id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
                                     </Button>
 
 
@@ -73,6 +74,7 @@ const index = () => {
                                 <td>{item.cpf}</td>
                                 <td>{item.email}</td>
                                 <td>{item.telefone}</td>
+                                <td>{item.modelo}</td>
                                 <td>{item.estado}</td>
                                 <td>{item.data}</td>
                             </tr>

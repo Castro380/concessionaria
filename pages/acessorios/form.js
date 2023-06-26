@@ -5,7 +5,7 @@ import React from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
-import acessoriosValidator from '@/validators/cadastrosValidator'
+import acessoriosValidator from '@/validators/acessoriosValidator'
 
 const form = () => {
 
@@ -17,6 +17,7 @@ const form = () => {
         const acessorios = JSON.parse(window.localStorage.getItem('acessorios')) || [] // tirar de uma string
         acessorios.push(dados)
         window.localStorage.setItem('acessorios', JSON.stringify(acessorios))//transformar em uma string
+        push('/acessorios')
     }
 
     return (
@@ -25,7 +26,7 @@ const form = () => {
             <Form>
                 <Form.Group className="mb-3" controlId="manta">
                     <Form.Label>Manta Refletiva:</Form.Label>
-                    <Form.Control insivalid={errors.manta} type="text" {...register('manta', acessoriosValidator.manta)} />
+                    <Form.Control insivalid={errors.manta} type="number" {...register('manta', acessoriosValidator.manta)} />
                 </Form.Group>
                 {
                     errors.manta &&
@@ -33,7 +34,7 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="calotas">
                     <Form.Label>Calotas:</Form.Label>
-                    <Form.Control isInvalid={errors.calotas} type="text" {...register('calotas', acessoriosValidator.calotas)} />
+                    <Form.Control isInvalid={errors.calotas} type="number" {...register('calotas', acessoriosValidator.calotas)} />
                 </Form.Group>
                 {
                     errors.calotas &&
@@ -41,7 +42,7 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="sensor">
                     <Form.Label>Sensor de Ré:</Form.Label>
-                    <Form.Control isInvalid={errors.sensor} type="text" {...register('sensor', acessoriosValidator.sensor)} />
+                    <Form.Control isInvalid={errors.sensor} type="number" {...register('sensor', acessoriosValidator.sensor)} />
                 </Form.Group>
                 {
                     errors.sensor &&

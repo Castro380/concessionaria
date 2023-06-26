@@ -7,13 +7,19 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import { mask } from 'remask'
+import revisoesValidator from '@/validators/revisoesValidator'
 
 const form = () => {
 
     const { push, query } = useRouter()
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, formState: {errors} } = useForm()
+    const [modelos, setModelos] = useState([])
+
 
     useEffect(() => {
+
+        const carros = JSON.parse(window.localStorage.getItem('carros'))
+        setModelos(carros)   
 
         if (query.id) {
             const id = query.id
@@ -33,47 +39,85 @@ const form = () => {
         push('/revisoes')
     }
 
+    function handleChange(event) {
+
+        const name = event.target.name
+        const valor = event.target.value
+        const mascara = event.target.getAttribute('mask')
+    
+        setValue(name, mask(valor, mascara))
+
+    }
+
     return (
         <Pagina titulo='Revisoes'>
 
 
 
-            <Form>
-                <Form.Group className="mb-3" controlId="nome">
+<Form>
+            <Form.Group className="mb-3" controlId="nome">
                     <Form.Label>Nome:</Form.Label>
-                    <Form.Control type="text" {...register('nome')} />
+                    <Form.Control isInvalid={errors.nome} type="text" {...register('nome', revisoesValidator.nome)} />
                 </Form.Group>
-
+                {
+                    errors.nome &&
+                    <p className='mt -1 text-danger'>{errors.nome.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="cpf">
-                    <Form.Label>Cpf:</Form.Label>
-                    <Form.Control
-                        mask='999.999.999-99'
-                        type="text" {...register('cpf')}
-                        onChange={handleChange} />
+                    <Form.Label>cpf:</Form.Label>
+                    <Form.Control 
+                    mask='999.999.999-99'
+                    isInvalid={errors.cpf} type="text" {...register('cpf', revisoesValidator.cpf)} 
+                    onChange={handleChange}/>
                 </Form.Group>
-
+                {
+                    errors.cpf &&
+                    <p className='mt -1 text-danger'>{errors.cpf.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email: </Form.Label>
-                    <Form.Control type="text" {...register('email')} />
+                    <Form.Control isInvalid={errors.email} type="text" {...register('email', revisoesValidator.email)} />
                 </Form.Group>
-
+                {
+                    errors.email &&
+                    <p className='mt -1 text-danger'>{errors.email.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="telefone">
                     <Form.Label>Telefone: </Form.Label>
-                    <Form.Control
-                        mask='999.999.999-99'
-                        type="text" {...register('telefone')}
-                        onChange={handleChange} />
+                    <Form.Control 
+                    mask='(99) 99999-9999'
+                    isInvalid={errors.telefone} type="text" {...register('telefone', revisoesValidator.telefone)} 
+                     onChange={handleChange} />
+                </Form.Group>
+                {
+                    errors.telefone &&
+                    <p className='mt -1 text-danger'>{errors.telefone.message}</p>
+                }
+                <Form.Group className="mb-3" controlId="modelo">
+                        <Form.Label>Modelo: </Form.Label>
+                        <Form.Select size="lg" {...register('modelo', revisoesValidator.modelo)}>
+                            {modelos.map((item) => (
+                                <option>{item.modelo}</option>
+                            ))} 
+                        </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="estado">
                     <Form.Label>Estado: </Form.Label>
-                    <Form.Control type="text" {...register('estado')} />
+                    <Form.Control isInvalid={errors.estado} type="text" {...register('estado', revisoesValidator.estado)} />
                 </Form.Group>
-
+                {
+                    errors.estado &&
+                    <p className='mt -1 text-danger'>{errors.estado.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="data">
                     <Form.Label>Data: </Form.Label>
-                    <Form.Control type="text" {...register('data')} />
+                    <Form.Control isInvalid={errors.data} type="date" {...register('data', revisoesValidator.data)} />
                 </Form.Group>
+                {
+                    errors.data &&
+                    <p className='mt -1 text-danger'>{errors.data.message}</p>
+                }
 
                 <div className='text-center'>
                     <Button variant="success" onClick={handleSubmit(salvar)}>

@@ -7,11 +7,12 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import { mask } from 'remask'
+import cadastrosValidator from '@/validators/cadastrosValidator'
 
 const form = () => {
 
     const { push, query } = useRouter()
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm()
 
     useEffect(() => {
 
@@ -47,45 +48,61 @@ const form = () => {
         <Pagina titulo='Cadastros'>
             <Form>
                 <Form.Group className="mb-3" controlId="nome">
-                    <Form.Label>NOME:</Form.Label>
-                    <Form.Control type="text" {...register('nome')} />
+                    <Form.Label>Nome:</Form.Label>
+                    <Form.Control isInvalid={errors.nome} type="text" {...register('nome', cadastrosValidator.nome)} />
                 </Form.Group>
+                {
+                    errors.nome &&
+                    <p className='mt -1 text-danger'>{errors.nome.message}</p>
+                }
 
                 <Form.Group className="mb-3" controlId="cpf">
-                    <Form.Label>CPF: </Form.Label>
-                    <Form.Control 
-                    mask='999.999.999-99'
-                     type="text" {...register('cpf')} 
-                     onChange={handleChange} />
+                    <Form.Label>Cpf:</Form.Label>
+                    <Form.Control mask='999.999.999-99'
+                        isInvalid={errors.cpf} type="text" {...register('cpf', cadastrosValidator.cpf)} onChange={handleChange} />
                 </Form.Group>
+                {
+                    errors.cpf &&
+                    <p className='mt -1 text-danger'>{errors.cpf.message}</p>
+                }
 
                 <Form.Group className="mb-3" controlId="telefone">
                     <Form.Label>Telefone: </Form.Label>
-                    <Form.Control 
-                    mask='999.999.999-99'
-                    type="text" {...register('telefone')}
-                    onChange={handleChange} />
+                    <Form.Control
+                        mask='(99) 99999-9999'
+                        isInvalid={errors.telefone} type="text" {...register('telefone', cadastrosValidator.telefone)} onChange={handleChange} />
                 </Form.Group>
+                {
+                    errors.telefone &&
+                    <p className='mt -1 text-danger'>{errors.telefone.message}</p>
+                }
 
                 <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email: </Form.Label>
-                    <Form.Control type="text" {...register('email')} />
+                    <Form.Control isInvalid={errors.email} type="text" {...register('email', cadastrosValidator.email)} />
                 </Form.Group>
+                {
+                    errors.email &&
+                    <p className='mt -1 text-danger'>{errors.email.message}</p>
+                }
 
                 <Form.Group className="mb-3" controlId="cep">
                     <Form.Label>CEP: </Form.Label>
-                    <Form.Control 
-                    mask='999.999.999-99'
-                     type="text" {...register('cep')} 
-                     onChange={handleChange} />
+                    <Form.Control
+                        mask='99.999-999'
+                        isInvalid={errors.cep} type="text" {...register('cep', cadastrosValidator.cep)} onChange={handleChange}/>
                 </Form.Group>
-
+                {
+                    errors.cep &&
+                    <p className='mt -1 text-danger'>{errors.cep.message}</p>
+                }
+                
                 <div className='text-center'>
                     <Button variant="success" onClick={handleSubmit(salvar)}>
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>
-                    <Link className="ms-2 btn btn-danger" href="/login">
+                    <Link className="ms-2 btn btn-danger" href="/cadastros">
                         <BsArrowLeftSquare className="me-2" />
                         Voltar
                     </Link>

@@ -2,7 +2,7 @@ import Pagina from '@/Componentes/Pagina'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
@@ -13,11 +13,18 @@ const form = () => {
 
     const { push } = useRouter()
     const { register, handleSubmit, setValue, formState: {errors} } = useForm()
+    const [modelos, setModelos] = useState([])
+
+    useEffect(() => {
+        const modelos = JSON.parse(window.localStorage.getItem('carros'))
+            setModelos(modelos)       
+    }, [])
 
     function salvar(dados) { //salvar dados no localstorage
         const revisoes = JSON.parse(window.localStorage.getItem('revisoes')) || [] // tirar de uma string
         revisoes.push(dados)
         window.localStorage.setItem('revisoes', JSON.stringify(revisoes))//transformar em uma string
+        push('/revisoes')
     }
     
     function handleChange(event) {
@@ -70,6 +77,15 @@ const form = () => {
                     errors.telefone &&
                     <p className='mt -1 text-danger'>{errors.telefone.message}</p>
                 }
+                <Form.Group className="mb-3" controlId="modelo">
+                        <Form.Label>Modelo: </Form.Label>
+                        <Form.Select size="lg" {...register('modelo', revisoesValidator.modelo)}>
+                            {modelos.map((item) => (
+                                <option>{item.modelo}</option>
+                            ))} 
+                        </Form.Select>
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="estado">
                     <Form.Label>Estado: </Form.Label>
                     <Form.Control isInvalid={errors.estado} type="text" {...register('estado', revisoesValidator.estado)} />
@@ -80,7 +96,7 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="data">
                     <Form.Label>Data: </Form.Label>
-                    <Form.Control isInvalid={errors.data} type="text" {...register('data', revisoesValidator.data)} />
+                    <Form.Control isInvalid={errors.data} type="date" {...register('data', revisoesValidator.data)} />
                 </Form.Group>
                 {
                     errors.data &&

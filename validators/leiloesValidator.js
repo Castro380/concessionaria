@@ -34,7 +34,7 @@ const leiloesValidator = {
             message: 'O máximo é 15'
         },
         pattern: {
-            value: /^\d{3}.\d{3}.\d{3}-\d{2}$/,        /*telefone esta invalido*/
+            value: /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/,        /*telefone esta invalido*/
             message: "telefone inválido"
         },
     },

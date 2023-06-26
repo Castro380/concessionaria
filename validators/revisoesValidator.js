@@ -23,6 +23,18 @@ const revisoesValidator = {
         },
     },
 
+    modelo:{
+        rrequired: 'Campo Obrigatório',
+        minLength: {
+            value: 1,
+            message: 'O mínimo é 1'
+        },
+        maxLength: {
+            value: 15,
+            message: 'O máximo é 15'
+        },
+    },
+
     email: {
         required: 'Campo Obrigatório',
         minLength: {
@@ -46,7 +58,7 @@ const revisoesValidator = {
             message: 'O máximo é 15'
         },
         pattern: {
-            value: /^\d{3}.\d{3}.\d{3}-\d{2}$/,              /*telefone esta invalido*/   
+            value: /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/,        /*telefone esta invalido*/
             message: "telefone inválido"
         },
     },
@@ -54,8 +66,8 @@ const revisoesValidator = {
     estado: {
         required: 'Campo Obrigatório',
         minLength: {
-            value: 7,
-            message: 'O mínimo é 7'
+            value: 1,
+            message: 'O mínimo é 1'
         },
         maxLength: {
             value: 20,

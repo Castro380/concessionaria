@@ -56,15 +56,15 @@ const index = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {carros.map((item) => (
-                            <tr key={item.id}>
+                        {carros.map((item, id) => (
+                            <tr key={id}>
                                 <td>
-                                    <Link href={'/carros/' + item.id}>
+                                    <Link href={'/carros/' + id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
                                     </Button>
 
 

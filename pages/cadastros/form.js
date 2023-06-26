@@ -18,6 +18,7 @@ const form = () => {
         const cadastros = JSON.parse(window.localStorage.getItem('cadastros')) || [] // tirar de uma string
         cadastros.push(dados)
         window.localStorage.setItem('cadastros', JSON.stringify(cadastros))//transformar em uma string
+        push('/cadastros')
     }
 
 
@@ -76,8 +77,8 @@ const form = () => {
                 <Form.Group className="mb-3" controlId="cep">
                     <Form.Label>CEP: </Form.Label>
                     <Form.Control
-                        mask='(99) 99999-9999'
-                        isInvalid={errors.cep} type="text" {...register('cep', cadastrosValidator.cep)} />
+                        mask='99.999-999'
+                        isInvalid={errors.cep} type="text" {...register('cep', cadastrosValidator.cep)} onChange={handleChange}/>
                 </Form.Group>
                 {
                     errors.cep &&
