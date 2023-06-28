@@ -1,5 +1,5 @@
 const leiloesValidator = {
-    nome: {
+    carro: {
         required: 'Campo Obrigatório',
         minLength: {
             value: 2,
@@ -11,7 +11,11 @@ const leiloesValidator = {
         },
     },
 
-     cpf: {
+    imagem: {
+        required: 'Campo Obrigatório',
+    },
+
+     Nome: {
         required: 'Campo Obrigatório',
         minLength: {
             value: 11,
@@ -36,18 +40,6 @@ const leiloesValidator = {
         pattern: {
             value: /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/,        /*telefone esta invalido*/
             message: "telefone inválido"
-        },
-    },
-
-    carro: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 3,
-            message: 'O mínimo é 3'
-        },
-        maxLength: {
-            value: 10,
-            message: 'O máximo é 10'
         },
     },
 
