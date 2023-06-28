@@ -2,8 +2,8 @@ const revisoesValidator = {
     nome: {
         required: 'Campo Obrigatório',
         minLength: {
-            value: 5,
-            message: 'O mínimo é 5'
+            value: 2,
+            message: 'O mínimo é 2'
         },
         maxLength: {
             value: 20,
@@ -62,19 +62,9 @@ const revisoesValidator = {
             message: "telefone inválido"
         },
     },
+    
 
-    estado: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 1,
-            message: 'O mínimo é 1'
-        },
-        maxLength: {
-            value: 20,
-            message: 'O máximo é 20'
-        },
-    },
-
+    
     data: {
         required: 'Campo Obrigatório',
         minLength: {

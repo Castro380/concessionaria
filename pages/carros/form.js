@@ -24,7 +24,7 @@ const form = () => {
         push('/carros')
     }
     return (
-        <Pagina titulo='carross'>
+        <Pagina titulo='carros'>
             <Form>
                 <Form.Group className="mb-3" controlId="marca">
                     <Form.Label>Marca:</Form.Label>

@@ -11,24 +11,22 @@ import { BsFillPencilFill } from 'react-icons/bs'
 
 
 const index = () => {
-
     const [cadastros, setCadastros] = useState([])
 
     useEffect(() => {
-        setCadastros(getAll())
-
+        getAll()
     }, [])
 
     function getAll() {
-        return JSON.parse(window.localStorage.getItem('cadastros')) || []
+        axios.get('/api/cadastros').then(resultado => {
+            setCadastros(resultado.data)
+        })
     }
 
     function excluir(id) {
-        if (confirm('Deseja realmente excluir o registro')) {
-            const itens = getAll()
-            itens.splice(id, 1)
-            window.localStorage.setItem('cadastros', JSON.stringify(itens))
-            setCadastros(itens)
+        if (confirm('Deseja realmente excluir o registro?')) {
+            axios.delete('/api/cadastros/' + id)
+            getAll()
         }
     }
 
@@ -53,6 +51,10 @@ const index = () => {
                             <th>Telefone</th>
                             <th>Email</th>
                             <th>Cep</th>
+                            <th>Cep</th>
+                            <th>Cep</th>
+                            <th>Cep</th>
+                            <th>Cep</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +76,10 @@ const index = () => {
                                 <td>{item.telefone}</td>
                                 <td>{item.email}</td>
                                 <td>{item.cep}</td>
+                                <td>{item.uf}</td>
+                                <td>{item.bairro}</td>
+                                <td>{item.cidade}</td>
+                                <td>{item.endereco}</td>
                             </tr>
                         ))}
                     </tbody>

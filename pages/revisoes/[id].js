@@ -13,11 +13,22 @@ const form = () => {
 
     const { push, query } = useRouter()
     const { register, handleSubmit, setValue, formState: {errors} } = useForm()
+    const [nomes, setNomes] = useState([])
     const [modelos, setModelos] = useState([])
+    const [cpfs, setCpfs] = useState([])
+    const [emails, setEmails] = useState([])
+    const [telefones, setTelefones] = useState([])
 
+    
 
     useEffect(() => {
 
+        const cadastros = JSON.parse(window.localStorage.getItem('cadastros'))
+        setNomes(cadastros)
+        setCpfs(cadastros)
+        setEmails(cadastros)
+        setTelefones(cadastros)
+        
         const carros = JSON.parse(window.localStorage.getItem('carros'))
         setModelos(carros)   
 
@@ -57,7 +68,11 @@ const form = () => {
 <Form>
             <Form.Group className="mb-3" controlId="nome">
                     <Form.Label>Nome:</Form.Label>
-                    <Form.Control isInvalid={errors.nome} type="text" {...register('nome', revisoesValidator.nome)} />
+                    <Form.Select size="lg" {...register('nome', revisoesValidator.nome)}>
+                            {nomes.map((item) => (
+                                <option>{item.nome}</option>
+                            ))} 
+                        </Form.Select>
                 </Form.Group>
                 {
                     errors.nome &&
@@ -65,18 +80,23 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="cpf">
                     <Form.Label>cpf:</Form.Label>
-                    <Form.Control 
-                    mask='999.999.999-99'
-                    isInvalid={errors.cpf} type="text" {...register('cpf', revisoesValidator.cpf)} 
-                    onChange={handleChange}/>
-                </Form.Group>
+                    <Form.Select size="lg" {...register('cpf', revisoesValidator.cpf)}>
+                            {cpfs.map((item) => (
+                                <option>{item.cpf}</option>
+                            ))} 
+                        </Form.Select>
+                    </Form.Group>
                 {
                     errors.cpf &&
                     <p className='mt -1 text-danger'>{errors.cpf.message}</p>
                 }
                 <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email: </Form.Label>
-                    <Form.Control isInvalid={errors.email} type="text" {...register('email', revisoesValidator.email)} />
+                    <Form.Select size="lg" {...register('email', revisoesValidator.email)}>
+                            {emails.map((item) => (
+                                <option>{item.email}</option>
+                            ))} 
+                        </Form.Select>
                 </Form.Group>
                 {
                     errors.email &&
@@ -84,10 +104,11 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="telefone">
                     <Form.Label>Telefone: </Form.Label>
-                    <Form.Control 
-                    mask='(99) 99999-9999'
-                    isInvalid={errors.telefone} type="text" {...register('telefone', revisoesValidator.telefone)} 
-                     onChange={handleChange} />
+                    <Form.Select size="lg" {...register('telefone', revisoesValidator.telefone)}>
+                            {telefones.map((item) => (
+                                <option>{item.telefone}</option>
+                            ))} 
+                        </Form.Select>
                 </Form.Group>
                 {
                     errors.telefone &&
@@ -102,14 +123,6 @@ const form = () => {
                         </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="estado">
-                    <Form.Label>Estado: </Form.Label>
-                    <Form.Control isInvalid={errors.estado} type="text" {...register('estado', revisoesValidator.estado)} />
-                </Form.Group>
-                {
-                    errors.estado &&
-                    <p className='mt -1 text-danger'>{errors.estado.message}</p>
-                }
                 <Form.Group className="mb-3" controlId="data">
                     <Form.Label>Data: </Form.Label>
                     <Form.Control isInvalid={errors.data} type="date" {...register('data', revisoesValidator.data)} />

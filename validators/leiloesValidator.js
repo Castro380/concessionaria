@@ -2,8 +2,8 @@ const leiloesValidator = {
     nome: {
         required: 'Campo Obrigatório',
         minLength: {
-            value: 3,
-            message: 'O mínimo é 3'
+            value: 2,
+            message: 'O mínimo é 2'
         },
         maxLength: {
             value: 20,
@@ -51,27 +51,15 @@ const leiloesValidator = {
         },
     },
 
-    ano: {
+    valor: {
         required: 'Campo Obrigatório',
         minLength: {
-            value: 4,
-            message: 'O mínimo é 4'
+            value: 1,
+            message: 'O mínimo é 1'
         },
         maxLength: {
-            value: 4,
-            message: 'O máximo é 4'
-        },
-    },
-
-    estado: {
-        required: 'Campo Obrigatório',
-        minLength: {
-            value: 3,
-            message: 'O mínimo é 3'
-        },
-        maxLength: {
-            value: 15,
-            message: 'O máximo é 15'
+            value: 10,
+            message: 'O máximo é 10'
         },
     },
 }

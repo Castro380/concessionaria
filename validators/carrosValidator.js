@@ -13,7 +13,7 @@ const carrosValidator = Yup.object().shape({
 
     cor: Yup.string()
         .required('Campo Obrigatório')
-        .min(3, 'O mínimo é 3')
+        .min(2, 'O mínimo é 2')
         .max(10, 'O máximo é 10'),
 
     ano: Yup.number()

@@ -3,84 +3,74 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Table } from 'react-bootstrap'
-import { set } from 'react-hook-form';
+import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import { BsFillPencilFill } from 'react-icons/bs'
 
 
-const index = () => {
-
+const Index = () => {
     const [leiloes, setLeiloes] = useState([])
 
     useEffect(() => {
-        setLeiloes(getAll())
-
+        getAll()
     }, [])
 
     function getAll() {
-        return JSON.parse(window.localStorage.getItem('leiloes')) || []
+        axios.get('/api/leiloes').then(resultado => {
+            setLeiloes(resultado.data)
+        })
     }
 
     function excluir(id) {
-        if (confirm('Deseja realmente excluir o registro')) {
-            const itens = getAll()
-            itens.splice(id, 1)
-            window.localStorage.setItem('leiloes', JSON.stringify(itens))
-            setLeiloes(itens)
+        if (confirm('Deseja realmente excluir o registro?')) {
+            axios.delete('/api/leiloes/' + id)
+            getAll()
         }
     }
 
     return (
         <>
-            <Pagina Titulo='leiloes'>
-
-            </Pagina>
+            <Pagina Titulo='leiloes' />
             <Container>
-
                 <Link href="/leiloes/form" className='mb-2 btn btn-primary mt-2'>
                     <AiFillPlusCircle />
                     Novo
                 </Link>
+                <Row>
+                    {leiloes.map((item) => (
+                        <Col key={item.id} md={4} className='mb-4'>
+                            <Card>
+                                <Card.Img variant="top" src={item.imagem} style={{ height: '250px' }} />
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Nome</th>
-                            <th>Cpf</th>
-                            <th>Carro</th>
-                            <th>Ano</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {leiloes.map((item, id) => (
-                            <tr key={id}>
-                                <td>
-                                    <Link href={'/leiloes/' + id}>
+                                <Card.Body>
+                                    <Card.Title>{item.carro}</Card.Title>
+                                    <Card.Text>
+                                        <strong>Nome do vendedor:</strong> {item.nome}<br />
+                                        <strong>Contato:</strong> {item.telefone}<br />
+                                        <strong>Valor:</strong> {item.valor}
+                                    </Card.Text>
+                                </Card.Body>
+                                <Card.Footer>
+                                    <Link href={'/leiloes/' + item.id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}
-                                    <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
+                                    <Button variant='secundary'>
+                                        <BsFillTrash3Fill
+                                            title="Excluir"
+                                            onClick={() => excluir(item.id)}
+                                            className="primary"
+                                        />
                                     </Button>
-
-
-                                </td>
-                                <td>{item.nome}</td>
-                                <td>{item.cpf}</td>
-                                <td>{item.carro}</td>
-                                <td>{item.ano}</td>
-                                <td>{item.estado}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
             </Container>
         </>
     )
 }
 
-export default index
+export default Index

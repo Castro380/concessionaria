@@ -2,7 +2,7 @@ import Pagina from '@/Componentes/Pagina'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
@@ -13,82 +13,90 @@ const form = () => {
 
     const { push } = useRouter()
     const { register, handleSubmit, setValue, formState: { errors } } = useForm()
+    const [leiloes, setLeiloes] = useState([]);
 
-    function salvar(dados) { //salvar dados no localstorage
-        const leiloes = JSON.parse(window.localStorage.getItem('leiloes')) || [] // tirar de uma string
-        leiloes.push(dados)
-        window.localStorage.setItem('leiloes', JSON.stringify(leiloes))//transformar em uma string
+    useEffect(() => {
+        getAll();
+    }, [])
+
+    function getAll() {
+        axios.get('/api/leiloes').then(resultado => {
+            setLeiloes(resultado.data);
+        });
+    }
+
+    function salvar(dados) {
+        axios.post('/api/leiloes', dados)
         push('/leiloes')
     }
-
-
-    function handleChange(event) {
-
-        const name = event.target.name
-        const valor = event.target.value
-        const mascara = event.target.getAttribute('mask')
-
-        setValue(name, mask(valor, mascara))
-
-    }
     return (
-        <Pagina titulo='leiloes'>
+        <Pagina titulo='Leiloes'>
+
+
+
             <Form>
-                <Form.Group className="mb-3" controlId="nome">
-                    <Form.Label>Nome:</Form.Label>
-                    <Form.Control isInvalid={errors.nome} type="text" {...register('nome', leiloesValidator.nome)} />
-                </Form.Group>
-                {
-                    errors.nome &&
-                    <p className='mt -1 text-danger'>{errors.nome.message}</p>
-                }
-
-                <Form.Group className="mb-3" controlId="cpf">
-                    <Form.Label>Cpf:</Form.Label>
-                    <Form.Control mask='999.999.999-99'
-                        isInvalid={errors.cpf} type="text" {...register('cpf', leiloesValidator.cpf)} onChange={handleChange} />
-                </Form.Group>
-                {
-                    errors.cpf &&
-                    <p className='mt -1 text-danger'>{errors.cpf.message}</p>
-                }
-
-                <Form.Group className="mb-3" controlId="telefone">
-                    <Form.Label>Telefone: </Form.Label>
+            <Form.Group className="mb-3" controlId='carro'>
+                    <Form.Label >Carro: </Form.Label>
                     <Form.Control
-                        mask='(99) 99999-9999'
-                        isInvalid={errors.telefone} type="text" {...register('telefone', leiloesValidator.telefone)} onChange={handleChange} />
-                </Form.Group>
-                {
-                    errors.telefone &&
-                    <p className='mt -1 text-danger'>{errors.telefone.message}</p>
-                }
-
-                <Form.Group className="mb-3" controlId="carro">
-                    <Form.Label>Carro:</Form.Label>
-                    <Form.Control isInvalid={errors.carro} type="text" {...register('carro', leiloesValidator.carro)} />
+                        isInvalid={errors.carro}
+                        isValid={!errors.carro}
+                        type="text"
+                        {...register('carro', leiloesValidator.carro)}
+                    />
                 </Form.Group>
                 {
                     errors.carro &&
                     <p className='mt -1 text-danger'>{errors.carro.message}</p>
                 }
 
-                <Form.Group className="mb-3" controlId="ano">
-                    <Form.Label>Ano:</Form.Label>
-                    <Form.Control isInvalid={errors.ano} type="text" {...register('ano', leiloesValidator.ano)} />
+                <Form.Group className="mb-3" controlId='imagem'>
+                    <Form.Label>Imagem:</Form.Label>
+                    <Form.Control
+                        isInvalid={errors.imagem}
+                        isValid={!errors.imagem}
+                        type="text"
+                        {...register('imagem', leiloesValidator.imagem)}
+                    />
+                    {errors.imagem && <p className='mt-1 text-danger'>{errors.imagem.message}</p>}
+                </Form.Group>
+
+
+                <Form.Group className="mb-3" controlId='nome'>
+                    <Form.Label >Nome do Vendedor: </Form.Label>
+                    <Form.Control
+                        isInvalid={errors.nome} /*mudar em todos*/
+                        isValid={!errors.nome}
+                        type="text"
+                        {...register('nome', leiloesValidator.nome)}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId='telefone'>
+                    <Form.Label >Contato: </Form.Label>
+                    <Form.Control
+                        isInvalid={errors.telefone}
+                        isValid={!errors.telefone}
+                        type="text"
+                        {...register('telefone', leiloesValidator.telefone)}
+                    />
                 </Form.Group>
                 {
-                    errors.ano &&
-                    <p className='mt -1 text-danger'>{errors.ano.message}</p>
+                    errors.telefone &&
+                    <p className='mt -1 text-danger'>{errors.telefone.message}</p>
                 }
 
-                <Form.Group className="mb-3" controlId="estado">
-                    <Form.Label>Estado:</Form.Label>
-                    <Form.Control isInvalid={errors.estado} type="text" {...register('estado', leiloesValidator.estado)} />
+                <Form.Group className="mb-3" controlId='valor'>
+                    <Form.Label >Valor: </Form.Label>
+                    <Form.Control
+                        isInvalid={errors.valor}
+                        isValid={!errors.valor}
+                        type="text"
+                        {...register('valor', leiloesValidator.valor)}
+                    />
                 </Form.Group>
                 {
-                    errors.estado &&
-                    <p className='mt -1 text-danger'>{errors.estado.message}</p>
+                    errors.valor &&
+                    <p className='mt -1 text-danger'>{errors.valor.message}</p>
                 }
                 <div className='text-center'>
                     <Button variant="success" onClick={handleSubmit(salvar)}>

@@ -2,8 +2,8 @@ const cadastrosValidator = {
     nome: {
         required: 'Campo Obrigatório',
         minLength: {
-            value: 12,
-            message: 'O mínimo é 6'
+            value: 2,
+            message: 'O mínimo é 2'
         },
         maxLength: {
             value: 20,

@@ -52,7 +52,6 @@ const index = () => {
                             <th>Email</th>
                             <th>Telefone</th>
                             <th>Modelo</th>
-                            <th>Estado</th>
                             <th>Data</th>
                         </tr>
                     </thead>
@@ -75,7 +74,6 @@ const index = () => {
                                 <td>{item.email}</td>
                                 <td>{item.telefone}</td>
                                 <td>{item.modelo}</td>
-                                <td>{item.estado}</td>
                                 <td>{item.data}</td>
                             </tr>
                         ))}
