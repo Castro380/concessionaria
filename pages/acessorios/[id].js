@@ -13,22 +13,21 @@ const form = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm()
 
     useEffect(() => {
-
         if (query.id) {
-            const id = query.id
-            const acessorios = JSON.parse(window.localStorage.getItem('acessorios')) || []
-            const acessorio = acessorios[query.id]
 
-            for (let atributo in acessorio) {
-                setValue(atributo, acessorio[atributo])
-            }
+            axios.get('/api/acessorios/' + query.id).then(resultado => {
+                const acessorio = resultado.data
+
+                for (let atributo in acessorio) {
+                    setValue(atributo, acessorio[atributo])
+                }
+            })
+
         }
     }, [query.id])
 
-    function salvar(dados) { //salvar dados no localstorage
-        const acessorios = JSON.parse(window.localStorage.getItem('acessorios')) || [] // tirar de uma string
-        acessorios.splice(query.id, 1, dados)
-        window.localStorage.setItem('acessorios', JSON.stringify(acessorios))//transformar em uma string
+    function alterar(dados) {
+        axios.put('/api/acessorios/' + query.id, dados)
         push('/acessorios')
     }
 
@@ -62,8 +61,9 @@ const form = () => {
                     errors.sensor &&
                     <p className='mt -1 text-danger'>{errors.sensor.message}</p>
                 }
+
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(salvar)}>
+                    <Button variant="success" onClick={handleSubmit(alterar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

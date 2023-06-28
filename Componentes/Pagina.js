@@ -3,23 +3,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Cabecalho from './Cabecalho'
 import Rodape from './Rodape';
 import { Container } from 'react-bootstrap';
+import Carrossel from './Carrossel';
 
 
 const Pagina = (props) => {
     return (
-        <>
-            <Cabecalho />
-            <div className='bg-secundary text-white py-3 text-center mb-3'>
-                <h1>{props.titulo}</h1>
-            </div>
+        <div>
+            <Cabecalho titulo={props.titulo} />
 
+            <Carrossel/>
 
             <Container className='mb-5'>
                 {props.children}
-
             </Container>
-            <Rodape />
-        </>
+
+            <Rodape/>
+        </div>
     )
 }
 

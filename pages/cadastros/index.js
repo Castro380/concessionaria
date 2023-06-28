@@ -66,7 +66,7 @@ const index = () => {
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
                                     </Button>
 
 

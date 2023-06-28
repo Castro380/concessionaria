@@ -63,6 +63,10 @@ const Formulario = () => {
         }
     }
 
+    function verificarCPFDuplicado(cpf) {
+        return cadastros.some(item => item.cpf === cpf)
+      }
+
     return (
         <Pagina titulo='cadastros'>
             <Form>
@@ -77,7 +81,17 @@ const Formulario = () => {
 
                 <Form.Group className="mb-3" controlId="cpf">
                     <Form.Label>Cpf:</Form.Label>
-                    <Form.Control mask='999.999.999-99' isInvalid={errors.cpf} type="text" {...register('cpf', cadastrosValidator.cpf)} onChange={handleChange} />
+                    <Form.Control
+                        mask='999.999.999-99'
+                        isInvalid={errors.cpf}
+                        type="text"
+                        {...register('cpf', {
+                            ...cadastrosValidator.cpf,
+                            validate: value =>
+                                !verificarCPFDuplicado(value) || 'CPF já cadastrado'
+                        })}
+                        onChange={handleChange}
+                    />
                 </Form.Group>
                 {
                     errors.cpf &&

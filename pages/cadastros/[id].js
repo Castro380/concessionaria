@@ -15,22 +15,21 @@ const form = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm()
 
     useEffect(() => {
-
         if (query.id) {
-            const id = query.id
-            const cadastros = JSON.parse(window.localStorage.getItem('cadastros')) || []
-            const cadastro = cadastros[query.id]
 
-            for (let atributo in cadastro) {
-                setValue(atributo, cadastro[atributo])
-            }
+            axios.get('/api/cadastros/' + query.id).then(resultado => {
+                const cadastro = resultado.data
+
+                for (let atributo in cadastro) {
+                    setValue(atributo, cadastro[atributo])
+                }
+            })
+
         }
     }, [query.id])
 
-    function salvar(dados) { //salvar dados no localstorage
-        const cadastros = JSON.parse(window.localStorage.getItem('cadastros')) || [] // tirar de uma string
-        cadastros.splice(query.id, 1, dados)
-        window.localStorage.setItem('cadastros', JSON.stringify(cadastros))//transformar em uma string
+    function alterar(dados) {
+        axios.put('/api/cadastros/' + query.id, dados)
         push('/cadastros')
     }
 
@@ -98,7 +97,7 @@ const form = () => {
                 }
                 
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(salvar)}>
+                    <Button variant="success" onClick={handleSubmit(alterar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

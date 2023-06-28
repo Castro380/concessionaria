@@ -2,7 +2,7 @@ import Pagina from '@/Componentes/Pagina'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
@@ -13,16 +13,24 @@ import * as yup from "yup"
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit, formState: {errors} } = useForm({
-        resolver: yupResolver(carrosValidator),
-      })
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm()
+    const [carros, setCarros] = useState([]);
 
-    function salvar(dados) { //salvar dados no localstorage
-        const carros = JSON.parse(window.localStorage.getItem('carros')) || [] // tirar de uma string
-        carros.push(dados)
-        window.localStorage.setItem('carros', JSON.stringify(carros))//transformar em uma string
+    useEffect(() => {
+        getAll();
+    }, [])
+
+    function getAll() {
+        axios.get('/api/carros').then(resultado => {
+            setCarros(resultado.data);
+        });
+    }
+
+    function salvar(dados) {
+        axios.post('/api/carros', dados)
         push('/carros')
     }
+
     return (
         <Pagina titulo='carros'>
             <Form>

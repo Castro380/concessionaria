@@ -9,14 +9,22 @@ import acessoriosValidator from '@/validators/acessoriosValidator'
 
 const form = () => {
 
-
     const { push } = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm()
+    const [acessorios, setAcessorios] = useState([]);
 
-    function salvar(dados) { //salvar dados no localstorage
-        const acessorios = JSON.parse(window.localStorage.getItem('acessorios')) || [] // tirar de uma string
-        acessorios.push(dados)
-        window.localStorage.setItem('acessorios', JSON.stringify(acessorios))//transformar em uma string
+    useEffect(() => {
+        getAll();
+    }, [])
+
+    function getAll() {
+        axios.get('/api/acessorios').then(resultado => {
+            setAcessorios(resultado.data);
+        });
+    }
+
+    function salvar(dados) {
+        axios.post('/api/acessorios', dados)
         push('/acessorios')
     }
 
@@ -48,8 +56,9 @@ const form = () => {
                     errors.sensor &&
                     <p className='mt -1 text-danger'>{errors.sensor.message}</p>
                 }
+
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(salvar)}>
+                    <Button variant="success" onClick={handleSubmit(alterar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

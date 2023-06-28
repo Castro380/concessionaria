@@ -112,7 +112,7 @@ const form = () => {
                 }
 
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(alterar)}>
+                    <Button variant="success" onClick={handleSubmit(alterar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

@@ -29,6 +29,7 @@ const form = () => {
         axios.post('/api/leiloes', dados)
         push('/leiloes')
     }
+    
     return (
         <Pagina titulo='Leiloes'>
 

@@ -55,10 +55,10 @@ const index = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {carros.map((item, id) => (
-                            <tr key={id}>
+                        {carros.map((item) => (
+                            <tr key={item.id}>
                                 <td>
-                                    <Link href={'/carros/' + id}>
+                                    <Link href={'/carros/' + item.id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}

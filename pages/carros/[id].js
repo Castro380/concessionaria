@@ -10,25 +10,24 @@ import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 const form = () => {
 
     const { push, query } = useRouter()
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm()
 
     useEffect(() => {
-
         if (query.id) {
-            const id = query.id
-            const carros = JSON.parse(window.localStorage.getItem('carros')) || []
-            const carro = carros[query.id]
 
-            for (let atributo in carro) {
-                setValue(atributo, carro[atributo])
-            }
+            axios.get('/api/carros/' + query.id).then(resultado => {
+                const carro = resultado.data
+
+                for (let atributo in carro) {
+                    setValue(atributo, carro[atributo])
+                }
+            })
+
         }
     }, [query.id])
 
-    function salvar(dados) { //salvar dados no localstorage
-        const carros = JSON.parse(window.localStorage.getItem('carros')) || [] // tirar de uma string
-        carros.splice(query.id, 1, dados)
-        window.localStorage.setItem('carros', JSON.stringify(carros))//transformar em uma string
+    function alterar(dados) {
+        axios.put('/api/carros/' + query.id, dados)
         push('/carros')
     }
 
@@ -54,7 +53,7 @@ const form = () => {
                 </Form.Group>
                 
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(salvar)}>
+                    <Button variant="success" onClick={handleSubmit(alterar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>
