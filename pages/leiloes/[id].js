@@ -7,6 +7,7 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import leiloesValidator from '@/validators/leiloesValidator'
+import { mask } from 'remask'
 
 const form = () => {
 
@@ -37,15 +38,13 @@ const form = () => {
         const name = event.target.name
         const valor = event.target.value
         const mascara = event.target.getAttribute('mask')
-
+    
         setValue(name, mask(valor, mascara))
-
+    
     }
 
     return (
         <Pagina titulo='Leiloes'>
-
-
 
             <Form>
             <Form.Group className="mb-3" controlId='carro'>
@@ -86,10 +85,12 @@ const form = () => {
                 <Form.Group className="mb-3" controlId='telefone'>
                     <Form.Label >Contato: </Form.Label>
                     <Form.Control
+                    mask='(99) 99999-9999'
                         isInvalid={errors.telefone}
                         isValid={!errors.telefone}
                         type="text"
                         {...register('telefone', leiloesValidator.telefone)}
+                        onChange={handleChange}
                     />
                 </Form.Group>
                 {

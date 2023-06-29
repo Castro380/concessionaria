@@ -37,10 +37,11 @@ const form = () => {
         const name = event.target.name
         const valor = event.target.value
         const mascara = event.target.getAttribute('mask')
-
-        setValue(name, currency.mask({ locale: 'pt-BR', currency: 'BRL', value: valor }))
-
+    
+        setValue(name, mask(valor, mascara))
+    
     }
+    
     return (
         <Pagina titulo='Leiloes'>
 
@@ -107,7 +108,7 @@ const form = () => {
                         isValid={!errors.valor}
                         type="text"
                         {...register('valor', leiloesValidator.valor)}
-                        onBlur={handleChange}
+            
                     />
                 </Form.Group>
                 {

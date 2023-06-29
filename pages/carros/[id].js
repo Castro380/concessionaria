@@ -1,4 +1,5 @@
 import Pagina from '@/Componentes/Pagina'
+import carrosValidator from '@/validators/carrosValidator'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -37,7 +38,7 @@ const form = () => {
             <Form>
                 <Form.Group className="mb-3" controlId="marca">
                     <Form.Label>Marca:</Form.Label>
-                    <Form.Control isInvalid={errors.marca} type="text" {...register('marca')} />
+                    <Form.Control isInvalid={errors.marca} type="text" {...register('marca', carrosValidator.marca)} />
                 </Form.Group>
                 {
                     errors.marca &&
@@ -45,7 +46,7 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="modelo">
                     <Form.Label>Modelo:</Form.Label>
-                    <Form.Control isInvalid={errors.modelo} type="text" {...register('modelo')} />
+                    <Form.Control isInvalid={errors.modelo} type="text" {...register('modelo', carrosValidator.modelo)} />
                 </Form.Group>
                 {
                     errors.modelo &&
@@ -53,7 +54,7 @@ const form = () => {
                 }
                 <Form.Group className="mb-3" controlId="cor">
                     <Form.Label>Cor:</Form.Label>
-                    <Form.Control isInvalid={errors.cor} type="text" {...register('cor')} />
+                    <Form.Control isInvalid={errors.cor} type="text" {...register('cor', carrosValidator.cor)} />
                 </Form.Group>
                 {
                     errors.cor &&

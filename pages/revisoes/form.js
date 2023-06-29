@@ -34,8 +34,8 @@ const Formulario = () => {
     });
   }
 
-  function salvar(dados) {
-    axios.post('/api/revisoes', dados);
+  async function salvar(dados) {
+     await axios.post('/api/revisoes', dados);
     push('/revisoes');
   }
 
@@ -88,10 +88,10 @@ const Formulario = () => {
           <Form.Control
             mask='999.999.999-99'
             isInvalid={errors.cpf}
-            type="text"
+            type="text"     
+            value={cpf}
             {...register('cpf', revisoesValidator.cpf)}
             onChange={handleChange}
-            value={cpf}
           />
         </Form.Group>
         {
@@ -105,9 +105,10 @@ const Formulario = () => {
             mask='(99) 99999-9999'
             isInvalid={errors.telefone}
             type="text"
+            
+            value={telefone}
             {...register('telefone', revisoesValidator.telefone)}
             onChange={handleChange}
-            value={telefone}
           />
         </Form.Group>
         {

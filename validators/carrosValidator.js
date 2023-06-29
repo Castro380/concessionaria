@@ -1,16 +1,16 @@
 const carrosValidator = {
 
-marca: {
-    required: 'Campo Obrigatório',
-        },
+    marca: {
+        required: 'Campo Obrigatório',
+    },
 
-modelo: {
-    required: 'Campo Obrigatório',
-        },
+    modelo: {
+        required: 'Campo Obrigatório',
+    },
 
-cor: {
-    required: 'Campo Obrigatório',
-        },
+    cor: {
+        required: 'Campo Obrigatório',
+    },
 }
 
 export default carrosValidator;

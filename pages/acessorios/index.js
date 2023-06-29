@@ -24,14 +24,14 @@ const index = () => {
         });
     }
 
+    
     function excluir(id) {
-        if (confirm('Deseja realmente excluir o registro')) {
-            const itens = getAll()
-            itens.splice(id, 1)
-            window.localStorage.setItem('acessorios', JSON.stringify(itens))
-            setAcessorios(itens)
+        if (confirm('Deseja realmente excluir o registro?')) {
+            axios.delete('/api/acessorios/' + id)
+            getAll()
         }
     }
+
     return (
         <>
             <Pagina Titulo='acessorios'>
@@ -54,15 +54,15 @@ const index = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {acessorios.map((item, id) => (
-                            <tr key={id}>
+                        {acessorios.map((item) => (
+                            <tr key={item.id}>
                                 <td>
-                                    <Link href={'/acessorios/' + id}>
+                                    <Link href={'/acessorios/' + item.id}>
                                         <BsFillPencilFill title="Alterar" />
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
                                     </Button>
                                     
                                 </td>
