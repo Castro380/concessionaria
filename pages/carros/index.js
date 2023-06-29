@@ -15,20 +15,19 @@ const index = () => {
     const [carros, setCarros] = useState([])
 
     useEffect(() => {
-        setCarros(getAll())
-
+        getAll();
     }, [])
 
     function getAll() {
-        return JSON.parse(window.localStorage.getItem('carros')) || []
+        axios.get('/api/carros').then(resultado => {
+            setCarros(resultado.data);
+        });
     }
 
     function excluir(id) {
-        if (confirm('Deseja realmente excluir o registro')) {
-            const itens = getAll()
-            itens.splice(id, 1)
-            window.localStorage.setItem('carros', JSON.stringify(itens))
-            setCarros(itens)
+        if (confirm('Deseja realmente excluir o registro?')) {
+            axios.delete('/api/carros/' + id)
+            getAll()
         }
     }
 
@@ -63,7 +62,7 @@ const index = () => {
                                     </Link>
                                     {' '}
                                     <Button variant='secundary' >
-                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(id)} className="primary" />
+                                        <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className="primary" />
                                     </Button>
 
 

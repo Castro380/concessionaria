@@ -16,15 +16,7 @@ const form = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm()
     const [carros, setCarros] = useState([]);
 
-    useEffect(() => {
-        getAll();
-    }, [])
 
-    function getAll() {
-        axios.get('/api/carros').then(resultado => {
-            setCarros(resultado.data);
-        });
-    }
 
     function salvar(dados) {
         axios.post('/api/carros', dados)
@@ -57,14 +49,6 @@ const form = () => {
                 {
                     errors.cor &&
                     <p className='mt -1 text-danger'>{errors.cor?.message}</p>
-                }
-                <Form.Group className="mb-3" controlId="ano">
-                    <Form.Label>Ano:</Form.Label>
-                    <Form.Control isInvalid={errors.ano} type="number" {...register('ano')} />
-                </Form.Group>
-                {
-                    errors.ano &&
-                    <p className='mt -1 text-danger'>{errors.ano?.message}</p>
                 }
                 <div className='text-center'>
                     <Button variant="success" onClick={handleSubmit(salvar)}>

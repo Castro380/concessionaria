@@ -1,4 +1,5 @@
 import Pagina from '@/Componentes/Pagina'
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -11,14 +12,16 @@ import { BsFillPencilFill } from 'react-icons/bs'
 
 const index = () => {
 
-    const [acessorios, setAcessorios] = useState([])
+    const [acessorios, setAcessorios] = useState([]);
 
     useEffect(() => {
-        setAcessorios(getAll())
+        getAll();
     }, [])
 
     function getAll() {
-        return JSON.parse(window.localStorage.getItem('acessorios')) || []
+        axios.get('/api/acessorios').then(resultado => {
+            setAcessorios(resultado.data);
+        });
     }
 
     function excluir(id) {
@@ -44,6 +47,7 @@ const index = () => {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Manta Refletiva</th>
                             <th>Calotas</th>
                             <th>Sensor de Ré</th>

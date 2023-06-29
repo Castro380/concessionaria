@@ -49,9 +49,7 @@ const index = () => {
                             <th></th>
                             <th>Nome</th>
                             <th>Cpf</th>
-                            <th>Email</th>
                             <th>Telefone</th>
-                            <th>Modelo</th>
                             <th>Data</th>
                         </tr>
                     </thead>
@@ -71,9 +69,7 @@ const index = () => {
                                 </td>
                                 <td>{item.nome}</td>
                                 <td>{item.cpf}</td>
-                                <td>{item.email}</td>
                                 <td>{item.telefone}</td>
-                                <td>{item.modelo}</td>
                                 <td>{item.data}</td>
                             </tr>
                         ))}

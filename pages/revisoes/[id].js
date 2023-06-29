@@ -73,18 +73,6 @@ const form = () => {
                     errors.cpf &&
                     <p className='mt -1 text-danger'>{errors.cpf.message}</p>
                 }
-                <Form.Group className="mb-3" controlId="email">
-                    <Form.Label>Email: </Form.Label>
-                    <Form.Select size="lg" {...register('email', revisoesValidator.email)}>
-                        {emails.map((item) => (
-                            <option>{item.email}</option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
-                {
-                    errors.email &&
-                    <p className='mt -1 text-danger'>{errors.email.message}</p>
-                }
                 <Form.Group className="mb-3" controlId="telefone">
                     <Form.Label>Telefone: </Form.Label>
                     <Form.Select size="lg" {...register('telefone', revisoesValidator.telefone)}>
@@ -97,14 +85,6 @@ const form = () => {
                     errors.telefone &&
                     <p className='mt -1 text-danger'>{errors.telefone.message}</p>
                 }
-                <Form.Group className="mb-3" controlId="modelo">
-                    <Form.Label>Modelo: </Form.Label>
-                    <Form.Select size="lg" {...register('modelo', revisoesValidator.modelo)}>
-                        {modelos.map((item) => (
-                            <option>{item.modelo}</option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
 
                 <Form.Group className="mb-3" controlId="data">
                     <Form.Label>Data: </Form.Label>

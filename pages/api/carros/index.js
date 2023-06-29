@@ -6,7 +6,7 @@ export default function handler(req, res) {
 
     if (req.method == 'GET') {
 
-        get(child(ref(db), 'carros/')).then(snapshot => {
+        get(child(ref(db), 'carros')).then(snapshot => {
 
             const retorno = []
 

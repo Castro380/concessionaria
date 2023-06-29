@@ -6,8 +6,8 @@ const cadastrosValidator = {
             message: 'O mínimo é 2'
         },
         maxLength: {
-            value: 20,
-            message: 'O máximo é 20'
+            value: 30,
+            message: 'O máximo é 30'
         },
     },
 

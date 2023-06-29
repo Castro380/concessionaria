@@ -6,6 +6,7 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import acessoriosValidator from '@/validators/acessoriosValidator'
+import axios from 'axios'
 
 const form = () => {
 

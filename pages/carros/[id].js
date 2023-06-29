@@ -37,23 +37,31 @@ const form = () => {
             <Form>
                 <Form.Group className="mb-3" controlId="marca">
                     <Form.Label>Marca:</Form.Label>
-                    <Form.Control type="text" {...register('marca')} />
+                    <Form.Control isInvalid={errors.marca} type="text" {...register('marca')} />
                 </Form.Group>
+                {
+                    errors.marca &&
+                    <p className='mt -1 text-danger'>{errors.marca.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="modelo">
                     <Form.Label>Modelo:</Form.Label>
-                    <Form.Control type="text" {...register('modelo')} />
+                    <Form.Control isInvalid={errors.modelo} type="text" {...register('modelo')} />
                 </Form.Group>
+                {
+                    errors.modelo &&
+                    <p className='mt -1 text-danger'>{errors.modelo?.message}</p>
+                }
                 <Form.Group className="mb-3" controlId="cor">
                     <Form.Label>Cor:</Form.Label>
-                    <Form.Control type="text" {...register('cor')} />
+                    <Form.Control isInvalid={errors.cor} type="text" {...register('cor')} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="ano">
-                    <Form.Label>Ano:</Form.Label>
-                    <Form.Control type="text" {...register('ano')} />
-                </Form.Group>
-                
+                {
+                    errors.cor &&
+                    <p className='mt -1 text-danger'>{errors.cor?.message}</p>
+                }
+
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(alterar)}> 
+                    <Button variant="success" onClick={handleSubmit(alterar)}>
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

@@ -6,28 +6,29 @@ import { Alert, Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import acessoriosValidator from '@/validators/acessoriosValidator'
+import axios from 'axios'
+import { mask } from 'remask'
 
 const form = () => {
 
     const { push } = useRouter()
     const { register, handleSubmit, setValue, formState: { errors } } = useForm()
-    const [acessorios, setAcessorios] = useState([]);
 
-    useEffect(() => {
-        getAll();
-    }, [])
-
-    function getAll() {
-        axios.get('/api/acessorios').then(resultado => {
-            setAcessorios(resultado.data);
-        });
-    }
 
     function salvar(dados) {
         axios.post('/api/acessorios', dados)
         push('/acessorios')
     }
 
+    function handleChange(event) {
+
+        const name = event.target.name
+        const valor = event.target.value
+        const mascara = event.target.getAttribute('mask')
+    
+        setValue(name, mask(valor, mascara))
+    
+      }
     return (
         <Pagina titulo='acessorios'>
 
@@ -58,7 +59,7 @@ const form = () => {
                 }
 
                 <div className='text-center'>
-                    <Button variant="success" onClick={handleSubmit(alterar)}> 
+                    <Button variant="success" onClick={handleSubmit(salvar)}> 
                         <BsCheckSquare className="me-2" />
                         Salvar
                     </Button>

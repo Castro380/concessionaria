@@ -51,10 +51,10 @@ const index = () => {
                             <th>Telefone</th>
                             <th>Email</th>
                             <th>Cep</th>
-                            <th>Cep</th>
-                            <th>Cep</th>
-                            <th>Cep</th>
-                            <th>Cep</th>
+                            <th>Uf</th>
+                            <th>Bairro</th>
+                            <th>Cidade</th>
+                            <th>Endereco</th>
                         </tr>
                     </thead>
                     <tbody>

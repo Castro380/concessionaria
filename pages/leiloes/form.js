@@ -7,7 +7,7 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsCheckSquare, BsArrowLeftSquare } from 'react-icons/bs'
 import leiloesValidator from '@/validators/leiloesValidator'
-import { mask } from 'remask'
+import { currency, mask } from 'remask'
 
 const form = () => {
 
@@ -29,14 +29,25 @@ const form = () => {
         axios.post('/api/leiloes', dados)
         push('/leiloes')
     }
-    
+
+    currency.mask({ locale: 'pt-BR', currency: 'BRL', value: 123456.78 })
+
+    function handleChange(event) {
+
+        const name = event.target.name
+        const valor = event.target.value
+        const mascara = event.target.getAttribute('mask')
+
+        setValue(name, currency.mask({ locale: 'pt-BR', currency: 'BRL', value: valor }))
+
+    }
     return (
         <Pagina titulo='Leiloes'>
 
 
 
             <Form>
-            <Form.Group className="mb-3" controlId='carro'>
+                <Form.Group className="mb-3" controlId='carro'>
                     <Form.Label >Carro: </Form.Label>
                     <Form.Control
                         isInvalid={errors.carro}
@@ -70,15 +81,18 @@ const form = () => {
                         type="text"
                         {...register('nome', leiloesValidator.nome)}
                     />
+                    {errors.nome && <p className='mt-1 text-danger'>{errors.nome.message}</p>}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId='telefone'>
                     <Form.Label >Contato: </Form.Label>
                     <Form.Control
+                        mask='(99) 99999-9999'
                         isInvalid={errors.telefone}
                         isValid={!errors.telefone}
                         type="text"
                         {...register('telefone', leiloesValidator.telefone)}
+                        onChange={handleChange}
                     />
                 </Form.Group>
                 {
@@ -93,6 +107,7 @@ const form = () => {
                         isValid={!errors.valor}
                         type="text"
                         {...register('valor', leiloesValidator.valor)}
+                        onBlur={handleChange}
                     />
                 </Form.Group>
                 {
